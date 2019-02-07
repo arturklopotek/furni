@@ -1,6 +1,5 @@
-<div class="slider">
+<div class="slider" on-slide="$ctrl.onSlide">
 	<bar ng-style="{width: $ctrl.width()}"></bar>
-	<input type="range" min="{{$ctrl.min}}" max="{{$ctrl.max}}" 
-		class="slider-square" ng-model="$ctrl.model">
-	<value>{{$ctrl.model}}</value>
+	
+	<value>{{$ctrl.value}}</value>
 </div>

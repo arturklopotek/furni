@@ -15,19 +15,25 @@ angular
     controller: SliderController
   });
 
+
 function SliderController($scope) {
 
 	this.$onInit = () => {
 		this.ngModel.$render = () => {
-		    this.model = this.ngModel.$viewValue;
+		    this.value = this.ngModel.$viewValue;
 		};
-		$scope.$watch(() => this.model, (value) => {
+		$scope.$watch(() => this.value, (value) => {
 		    this.ngModel.$setViewValue(value);
 		});
     };
 
 	this.width = () => {
-		const p = (this.model / this.max) * 100;
+		const p = this.value / this.max * 100;
 		return `${p}%`;
+	}
+
+	this.onSlide = (sliderValue) => {
+		const value = Math.round(sliderValue * this.max);
+		this.value = Math.max(this.min, value);
 	}
 }
