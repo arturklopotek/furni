@@ -55,7 +55,7 @@
 	</head>
 	<body>
 
-		<div class="container" ng-controller="AppController">
+		<div class="container" ng-controller="AppController as ctrl">
 
 			<div class="controls" ng-cloak>
 
@@ -85,12 +85,18 @@
 				</fieldset>
 
 				<div class="buttons" style="margin-top: 40px">
-					<button>Pobierz</button>
+					<button ng-click="ctrl.download()">Pobierz</button>
 				</div>
 
 			</div>
 
-			<div id="preview"></div>
+			<div id="preview">
+				<div class="button-bar">
+					<img alt="Widok" title="Rzut ortograficzny / Perspektywa" 
+						src="images/cube.png" ng-click="ctrl.changeView()"
+						ng-style="{opacity: params.ortho ? 0.5 : 1}"/>
+				</div>
+			</div>
 
 		</div>
 

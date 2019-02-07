@@ -1,4 +1,4 @@
-var camera, scene, renderer;
+var camera, orthoCamera, scene, renderer;
 var mesh, lines, group, viewport;
 
 const Params = {
@@ -15,8 +15,12 @@ function init() {
 		height: previewEl.offsetHeight,
 	}
 
-	camera = new THREE.PerspectiveCamera( 70, viewport.width / viewport.height, 1, 1000 );
-	camera.position.z = 400;
+	camera = new THREE.PerspectiveCamera( 70, viewport.width / viewport.height, 1, 20000 );
+	camera.position.z = 900;
+
+	orthoCamera = new THREE.OrthographicCamera( viewport.width / - 2, viewport.width / 2, viewport.height / 2, viewport.height / - 2, 1, 20000 );
+	orthoCamera.position.z = 900;
+
 	scene = new THREE.Scene();
 	scene.background = new THREE.Color(0xffffff);
 	
@@ -34,13 +38,22 @@ function init() {
 	group.add(mesh);
 	group.add(lines);
 
-	scene.add(group);
-	
+	scene.add(group);	
 
 	renderer = new THREE.WebGLRenderer( { antialias: true } );
 	renderer.setPixelRatio( window.devicePixelRatio );
 	renderer.setSize( viewport.width, viewport.height );
 	
+	var controls = new THREE.OrbitControls( camera, renderer.domElement );
+	controls.maxPolarAngle = 1.13*Math.PI/2; // radians
+	controls.target.set(0,0,0);
+	camera.lookAt(controls.target);
+
+	var controls = new THREE.OrbitControls( orthoCamera, renderer.domElement );
+	controls.maxPolarAngle = 1.13*Math.PI/2; // radians
+	controls.target.set(0,0,0);
+	orthoCamera.lookAt(controls.target);
+
 	previewEl.appendChild( renderer.domElement );
 	//
 	window.addEventListener( 'resize', onWindowResize, false );
@@ -59,5 +72,5 @@ function animate() {
 	group.scale.z = Params.d / 200;
 	group.scale.y = Params.h / 200;
 
-	renderer.render( scene, camera );
+	renderer.render( scene, Params.ortho ? orthoCamera : camera );
 }

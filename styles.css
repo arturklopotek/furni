@@ -124,3 +124,13 @@ slider + label {
 .ng-mask {
 	visibility: hidden;
 }
+
+#preview > .button-bar {
+	float: right;
+	margin: 20px;
+}
+#preview > .button-bar > * {
+	width: 30px;
+	margin:-left: 10px;
+	cursor: pointer;
+}
