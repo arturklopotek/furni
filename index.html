@@ -1,15 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="app">
 	<head>
 		<title>three.js webgl - lights - physical lights</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+		<link rel="apple-touch-icon" sizes="57x57" href="icons/apple-icon-57x57.png">
+		<link rel="apple-touch-icon" sizes="60x60" href="icons/apple-icon-60x60.png">
+		<link rel="apple-touch-icon" sizes="72x72" href="icons/apple-icon-72x72.png">
+		<link rel="apple-touch-icon" sizes="76x76" href="icons/apple-icon-76x76.png">
+		<link rel="apple-touch-icon" sizes="114x114" href="icons/apple-icon-114x114.png">
+		<link rel="apple-touch-icon" sizes="120x120" href="icons/apple-icon-120x120.png">
+		<link rel="apple-touch-icon" sizes="144x144" href="icons/apple-icon-144x144.png">
+		<link rel="apple-touch-icon" sizes="152x152" href="icons/apple-icon-152x152.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-icon-180x180.png">
+		<link rel="icon" type="image/png" sizes="192x192"  href="icons/android-icon-192x192.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="96x96" href="icons/favicon-96x96.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
+		<link rel="manifest" href="icons/manifest.json">
+		<meta name="msapplication-TileColor" content="#ffffff">
+		<meta name="msapplication-TileImage" content="icons/ms-icon-144x144.png">
+		<meta name="theme-color" content="#ffffff">
+
+		<link rel="stylesheet" href="styles.css">
+		<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Ubuntu" />
 		<style>
-			body {
-				background-color: #000;
-				margin: 0px;
-				overflow: hidden;
-			}
 
 			#info {
 				position: absolute;
@@ -30,14 +46,50 @@
 				color: #0080ff;
 			}
 		</style>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.5/angular.js"></script>
+		<script src="src/slider.component.js"></script>
+
 	</head>
 	<body>
 
-		<div id="container"></div>
-		<div id="info" style="display: none">
-			<a href="http://threejs.org" target="_blank" rel="noopener">three.js</a> - Physically accurate lighting example using a incandescent bulb - by <a href="http://clara.io" target="_blank" rel="noopener">Ben Houston</a><br />
-			Using real world scale: Brick cube is 1 meter in size.  Light is 2 meters from floor.  Globe is 25 cm in diameter.<br/>
-			Using Reinhard inline tonemapping with real-world light falloff (decay = 2).
+		<div class="container">
+
+			<div class="controls" ng-init="d = 50;w=320;h=200" ng-cloak>
+
+				<div style="margin-bottom: 40px">
+					<slider min="0" max="900" ng-model="d"></slider>
+					<label>Głębokość</label>
+
+					<slider min="0" max="900" ng-model="w"></slider>
+					<label>Szerokość</label>
+
+					<slider min="0" max="900" ng-model="h"></slider>
+					<label>Wysokość</label>
+				</div>
+
+				<fieldset class="label">
+					<label>Grubość materiału</label>
+					<value>20</value>
+				</fieldset>
+				<fieldset class="label">
+					<label>Zaokrąglenia</label><value>40</value>
+				</fieldset>
+				<fieldset class="label">
+					<label>Frez</label><value>8</value>
+				</fieldset>
+				<fieldset class="label">
+					<label>Tolerancja</label><value>1</value>
+				</fieldset>
+
+				<div class="buttons" style="margin-top: 40px">
+					<button>Pobierz</button>
+				</div>
+
+			</div>
+
+			<div id="preview"></div>
+
 		</div>
 
 		<script src="js/three.js"></script>
@@ -98,6 +150,11 @@
 				hemiIrradiance: Object.keys( hemiLuminousIrradiances )[3]
 			};
 
+			const container = document.getElementById( 'preview' );
+			const viewport = {
+				width: container.offsetWidth,
+				height: container.offsetHeight
+			};
 
 			var clock = new THREE.Clock();
 
@@ -106,16 +163,15 @@
 
 			function init() {
 
-				var container = document.getElementById( 'container' );
-
 				stats = new Stats();
-				container.appendChild( stats.dom );
+				//container.appendChild( stats.dom );
 
 
-				camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 0.1, 100 );
+				camera = new THREE.PerspectiveCamera( 50, viewport.width / viewport.height, 0.1, 100 );
 				camera.position.set(-1.6, 4.8, 1.6);
 
 				scene = new THREE.Scene();
+				scene.background = new THREE.Color( 0xffffff );
 
 				var bulbGeometry = new THREE.SphereGeometry( 0.02, 16, 8 );
 				bulbLight = new THREE.PointLight( 0xffee88, 1, 100, 2 );
@@ -269,7 +325,7 @@
 				renderer.shadowMap.enabled = true;
 				renderer.toneMapping = THREE.ReinhardToneMapping;
 				renderer.setPixelRatio( window.devicePixelRatio );
-				renderer.setSize( window.innerWidth, window.innerHeight );
+				renderer.setSize( viewport.width, viewport.height );
 				container.appendChild( renderer.domElement );
 
 
@@ -282,21 +338,20 @@
 				window.addEventListener( 'resize', onWindowResize, false );
 
 
-				var gui = new dat.GUI();
-
+				/*var gui = new dat.GUI();
 				gui.add( params, 'hemiIrradiance', Object.keys( hemiLuminousIrradiances ) );
 				gui.add( params, 'bulbPower', Object.keys( bulbLuminousPowers ) );
 				gui.add( params, 'exposure', 0, 1 );
 				gui.add( params, 'shadows' );
-				gui.open();
+				gui.open();*/
 			}
 
 			function onWindowResize() {
 
-				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.aspect = viewport.width / viewport.height;
 				camera.updateProjectionMatrix();
 
-				renderer.setSize( window.innerWidth, window.innerHeight );
+				renderer.setSize( viewport.width, viewport.height );
 
 			}
 
@@ -360,8 +415,8 @@
 			}
 
 			function onMouseMove( event ) {
-				mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-				mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+				mouse.x = ( event.clientX / viewport.width ) * 2 - 1;
+				mouse.y = - ( event.clientY / viewport.height ) * 2 + 1;
 			}			
 
 			function onMouseClick( event ) {

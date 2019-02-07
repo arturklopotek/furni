@@ -1,0 +1,122 @@
+body {
+	background-color: white;
+	margin: 0px;
+	overflow: hidden;
+	font-family: Ubuntu;
+	font-size: 18px;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+.container {
+	display: flex;
+    align-items: center;
+}
+
+.controls {
+	display: block;
+	float: left;
+	width: 50%;
+	padding: 0 200px;
+}
+
+.controls fieldset.label {
+	display: block;
+	margin-bottom: 20px;
+	border: none;
+	padding: 0;
+}
+.controls fieldset.label > value {
+	display: block;
+	float: right;
+}
+.controls button {
+	background: #252524;
+	border: none;
+	color: white;
+	font-variant: small-caps;
+	text-transform: lowercase;
+	display: block;
+	padding: 4px;
+	font-size: 18px;
+	font-weight: 100;
+	width: 100%;
+	font-weight: 100;
+	cursor: pointer;
+}
+
+
+.slider {
+	position: relative;
+	border-bottom: 1px solid #252524;
+}
+slider + label {
+	display: block;
+	margin-bottom: 20px;
+}
+.slider > bar {
+	height: 16px;
+	background: #252524;
+	display: block;
+	position: absolute;
+	z-index: 1;
+	pointer-events: none;
+	bottom: 0px;
+}
+.controls label {
+	font-variant: small-caps;
+	text-transform: lowercase;
+}
+
+.slider > value {
+	position: absolute;
+	right: -2px;
+	bottom: -1px;
+	border: 1px solid #252524;
+	padding: 0 4px;
+	font-size: 14px;
+	height: 16px;
+}
+
+.slider > input {
+	z-index: 2;
+	cursor: pointer;
+	position: relative;
+	top: 4px;
+}
+
+#preview {
+	width: 50%;
+	height: 600px;
+	float: left;
+}
+
+
+.slider-square {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 16px;
+  background: none;
+  outline: none;
+  opacity:1;
+  -webkit-transition: opacity .15s ease-in-out;
+  transition: opacity .15s ease-in-out;
+}
+.slider-square:hover {
+  opacity:1;
+}
+
+.slider-square::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 0px;
+  height: 16px;
+  background: black;
+  cursor: pointer;
+}
+
+.ng-mask {
+	visibility: hidden;
+}
