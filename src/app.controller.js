@@ -21,6 +21,5 @@ function AppController($scope) {
 
 	this.changeView = () => {
 		$scope.params.ortho = !$scope.params.ortho;
-		console.info('a');
 	}
 }
