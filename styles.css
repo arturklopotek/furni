@@ -19,7 +19,8 @@ body {
 	display: block;
 	float: left;
 	width: 50%;
-	padding: 0 50px;
+	padding: 50px;
+	overflow: scroll;
 }
 
 .controls fieldset.label {
@@ -126,11 +127,23 @@ slider + label {
 }
 
 #preview > .button-bar {
-	float: right;
 	margin: 20px;
+	position: absolute;
+	right: 0;
 }
 #preview > .button-bar > * {
 	width: 30px;
 	margin:-left: 10px;
 	cursor: pointer;
+}
+
+@media (max-width: 600px) {
+	#preview, .controls {
+		width: 100%;
+		height: 50vh;
+	}
+	#preview {
+		position: fixed;
+		bottom: 0;
+	}
 }

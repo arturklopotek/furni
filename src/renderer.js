@@ -17,12 +17,12 @@ function init() {
 	};
 
 	camera = new THREE.PerspectiveCamera( 70, viewport.width / viewport.height, 1, 20000 );
-	camera.position.y = 500;
-	camera.position.z = 700;
+	camera.position.y = 300;
+	camera.position.z = 400;
 
 	orthoCamera = new THREE.OrthographicCamera( viewport.width / - 2, viewport.width / 2, viewport.height / 2, viewport.height / - 2, 1, 20000 );
-	orthoCamera.position.y = 500;
-	orthoCamera.position.z = 700;
+	orthoCamera.position.y = 200;
+	orthoCamera.position.z = 400;
 
 	scene = new THREE.Scene();
 	scene.background = new THREE.Color(0xffffff);
