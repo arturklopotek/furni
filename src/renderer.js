@@ -34,13 +34,13 @@ function init() {
 	renderer.setSize( viewport.width, viewport.height );
 	
 	var controls = new THREE.OrbitControls( camera, renderer.domElement );
-	controls.maxPolarAngle = 1.13*Math.PI/2; // radians
 	controls.target.set(0,0,0);
+	controls.enableDamping = true;
 	camera.lookAt(controls.target);
 
 	var controls = new THREE.OrbitControls( orthoCamera, renderer.domElement );
-	controls.maxPolarAngle = 1.13*Math.PI/2; // radians
 	controls.target.set(0,0,0);
+	controls.enableDamping = true;
 	orthoCamera.lookAt(controls.target);
 
 	previewEl.appendChild( renderer.domElement );
@@ -78,7 +78,7 @@ function reset(params) {
 
 	const object = new THREE.Group();
 
-	const { d: a, w: b, h: c } = params,
+	const { w: a, d: b, h: c } = params,
 		d = 20;
 
 	// top

@@ -23,6 +23,10 @@ body {
 	overflow: scroll;
 }
 
+.controls .buttons {
+	margin: 40px 0 10px
+}
+
 .controls fieldset.label {
 	display: block;
 	margin-bottom: 20px;
@@ -145,5 +149,13 @@ slider + label {
 	#preview {
 		position: fixed;
 		bottom: 0;
+	}
+	.controls .buttons {
+		margin: 0;
+	    position: fixed;
+	    bottom: 0px;
+	    z-index: 1;
+	    width: 100%;
+	    left: 0;
 	}
 }
