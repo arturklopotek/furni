@@ -137,7 +137,6 @@ slider + label {
 }
 #preview > .button-bar > * {
 	width: 30px;
-	margin:-left: 10px;
 	cursor: pointer;
 }
 
@@ -145,6 +144,9 @@ slider + label {
 	#preview, .controls {
 		width: 100%;
 		height: 50vh;
+	}
+	.controls {
+		padding: 0 10px;
 	}
 	#preview {
 		position: fixed;

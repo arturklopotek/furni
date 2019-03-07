@@ -35,12 +35,10 @@ function init() {
 	
 	var controls = new THREE.OrbitControls( camera, renderer.domElement );
 	controls.target.set(0,0,0);
-	controls.enableDamping = true;
 	camera.lookAt(controls.target);
 
 	var controls = new THREE.OrbitControls( orthoCamera, renderer.domElement );
 	controls.target.set(0,0,0);
-	controls.enableDamping = true;
 	orthoCamera.lookAt(controls.target);
 
 	previewEl.appendChild( renderer.domElement );

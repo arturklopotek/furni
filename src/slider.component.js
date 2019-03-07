@@ -7,7 +7,8 @@ angular
     templateUrl: 'src/slider.template.html',
     bindings: { 
     	min: "<",
-    	max: "<"
+    	max: "<",
+    	step: "<",
     },
     require: {
         ngModel: '^ngModel'
@@ -25,6 +26,7 @@ function SliderController($scope) {
 		$scope.$watch(() => this.value, (value) => {
 		    this.ngModel.$setViewValue(value);
 		});
+		this.step = this.step || 1;
     };
 
 	this.width = () => {
@@ -33,7 +35,7 @@ function SliderController($scope) {
 	}
 
 	this.onSlide = (sliderValue) => {
-		const value = Math.round(sliderValue * this.max);
+		const value = Math.round(sliderValue * this.max / this.step) * this.step;
 		this.value = Math.max(this.min, value);
 	}
 }
