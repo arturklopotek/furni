@@ -16,7 +16,7 @@ function AppController($scope) {
 	}, true);
 
 	this.download = () => {
-		window.location = "files/Vague chair- production.dxf";
+		window.location = "files/Ryczka_Sikorska-Dlugaj.dxf";
 	}
 
 	this.changeView = () => {
